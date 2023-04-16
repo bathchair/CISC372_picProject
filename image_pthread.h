@@ -23,7 +23,7 @@ typedef struct {
 } convolute_args;
 
 uint8_t getPixelValue(Image* srcImage,int x,int y,int bit,Matrix algorithm);
-void* convolute(convolute_args args);
+void* convolute(void* args);
 int Usage();
 enum KernelTypes GetKernelType(char* type);
 

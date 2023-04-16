@@ -56,12 +56,13 @@ uint8_t getPixelValue(Image* srcImage,int x,int y,int bit,Matrix algorithm){
 //            destImage: A pointer to a  pre-allocated (including space for the pixel array) structure to receive the convoluted image.  It should be the same size as srcImage
 //            algorithm: The kernel matrix to use for the convolution
 //Returns: Nothing
-void* convolute(convolute_args args) {
+void* convolute(void* arguments) {
+	convolute_args* args = (convolute_args*) arguments;
 	int pix, bit, span;
-	span = args.srcImage->bpp * args.srcImage->bpp;
-	for (pix = 0; pix < args.srcImage->width; pix++) {
-		for (bit = 0; bit < args.srcImage->bpp; bit++) {
-			args.destImage->data[Index(pix, args.imageRow, args.srcImage->width, bit, args.srcImage->bpp)] = getPixelValue(args.srcImage, pix, args.imageRow,bit, args.algorithm);
+	span = args->srcImage->bpp * args->srcImage->bpp;
+	for (pix = 0; pix < args->srcImage->width; pix++) {
+		for (bit = 0; bit < args->srcImage->bpp; bit++) {
+			args->destImage->data[Index(pix, args->imageRow, args->srcImage->width, bit, args->srcImage->bpp)] = getPixelValue(args->srcImage, pix, args->imageRow,bit, args->algorithm);
 		}
 	}
 }
@@ -119,8 +120,12 @@ int main(int argc,char** argv){
     pthread_t id[srcImage.height];
     for (int i = 0; i < srcImage.height; i++) {
 	    args.imageRow = i;
-	    pthread_create(&id[i], NULL, convolute, &args);
+	    pthread_create(&id[i], NULL, &convolute, (void*)&args);
 	    printf("Created Thread %i\n", i);
+    }
+
+    for (int i = 0; i < srcImage.height; i++) {
+	    pthread_join(id[i], NULL);
     }
 
     stbi_write_png("output.png",destImage.width,destImage.height,destImage.bpp,destImage.data,destImage.bpp*destImage.width);
