@@ -62,7 +62,7 @@ void* convolute(void* arguments) {
 	span = args->srcImage->bpp * args->srcImage->bpp;
 	for (pix = 0; pix < args->srcImage->width; pix++) {
 		for (bit = 0; bit < args->srcImage->bpp; bit++) {
-			args->destImage->data[Index(pix, args->imageRow, args->srcImage->width, bit, args->srcImage->bpp)] = getPixelValue(args->srcImage, pix, args->imageRow,bit, args->algorithm);
+			args->destImage->data[Index(pix, args->imageRow, args->srcImage->width, bit, args->srcImage->bpp)] = getPixelValue(args->srcImage, pix, args->imageRow,bit, *args->algorithm);
 		}
 	}
 
@@ -117,7 +117,7 @@ int main(int argc,char** argv){
     convolute_args args;
     args.srcImage =  &srcImage;
     args.destImage = &destImage;
-    memcpy(args.algorithm, algorithms[type], sizeof(algorithms[type]));
+    args.algorithm = &algorithms[type];
 
     pthread_t id[srcImage.height];
     for (int i = 0; i < srcImage.height; i++) {

@@ -18,7 +18,7 @@ typedef double Matrix[3][3];
 typedef struct {
 	Image* srcImage;
 	Image* destImage;
-	Matrix algorithm;
+	Matrix* algorithm;
 	int imageRow;
 } convolute_args;
 
