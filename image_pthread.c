@@ -65,6 +65,8 @@ void* convolute(void* arguments) {
 			args->destImage->data[Index(pix, args->imageRow, args->srcImage->width, bit, args->srcImage->bpp)] = getPixelValue(args->srcImage, pix, args->imageRow,bit, args->algorithm);
 		}
 	}
+
+	printf("Finished line\n");
 }
 
 //Usage: Prints usage information for the program
