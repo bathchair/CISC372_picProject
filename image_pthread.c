@@ -58,11 +58,22 @@ uint8_t getPixelValue(Image* srcImage,int x,int y,int bit,Matrix algorithm){
 //Returns: Nothing
 void* convolute(void* arguments) {
 	convolute_args* args = (convolute_args*) arguments;
-	int pix, bit, span;
+	int row, pix, bit, span;
+	int start_row, end_row;
+	start_row = args->rank * (args->srcImage->height / args->threadCount);
+	end_row = (args->rank + 1) * (args->srcImage->height / args->threadCount);
+
+	if (args->rank < args->threadCount - 1) {
+		end_row += args->srcImage->height % args->threadCount;
+	}
+
 	span = args->srcImage->bpp * args->srcImage->bpp;
-	for (pix = 0; pix < args->srcImage->width; pix++) {
-		for (bit = 0; bit < args->srcImage->bpp; bit++) {
-			args->destImage->data[Index(pix, args->imageRow, args->srcImage->width, bit, args->srcImage->bpp)] = getPixelValue(args->srcImage, pix, args->imageRow,bit, *args->algorithm);
+
+	for (row = start_row; row < end_row; row++) {
+		for (pix = 0; pix < args->srcImage->width; pix++) {
+			for (bit = 0; bit < args->srcImage->bpp; bit++) {
+				args->destImage->data[Index(pix, row, args->srcImage->width, bit, args->srcImage->bpp)] = getPixelValue(args->srcImage, pix, row, bit, *args->algorithm);
+			}
 		}
 	}
 
@@ -119,9 +130,12 @@ int main(int argc,char** argv){
     args.destImage = &destImage;
     args.algorithm = &algorithms[type];
 
-    pthread_t id[srcImage.height];
-    for (int i = 0; i < srcImage.height; i++) {
-	    args.imageRow = i;
+    int threadCount = 10;
+    pthread_t id[threadCount];
+    args.threadCount = threadCount;
+
+    for (int i = 0; i < threadCount; i++) {
+	    args.rank = i;
 	    pthread_create(&id[i], NULL, &convolute, (void*)&args);
 	    printf("Created Thread %i\n", i);
     }

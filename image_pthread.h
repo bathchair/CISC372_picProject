@@ -19,7 +19,8 @@ typedef struct {
 	Image* srcImage;
 	Image* destImage;
 	Matrix* algorithm;
-	int imageRow;
+	int rank;
+	int threadCount;
 } convolute_args;
 
 uint8_t getPixelValue(Image* srcImage,int x,int y,int bit,Matrix algorithm);
