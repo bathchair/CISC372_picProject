@@ -61,7 +61,7 @@ void* convolute(void* arguments) {
 	int row, pix, bit, span;
 	int start_row, end_row;
 	start_row = args->rank * (args->srcImage->height / args->threadCount);
-	end_row = (args->rank + 1) * (args->srcImage->height / args->threadCount);
+	end_row = start_row + (args->srcImage->height / args->threadCount);
 
 	if (args->rank < args->threadCount - 1) {
 		end_row += args->srcImage->height % args->threadCount;
@@ -77,7 +77,7 @@ void* convolute(void* arguments) {
 		}
 	}
 
-	printf("Finished line\n");
+	printf("Finished line - %i\n", args->rank);
 }
 
 //Usage: Prints usage information for the program
@@ -136,11 +136,8 @@ int main(int argc,char** argv){
 
     for (int i = 0; i < threadCount; i++) {
 	    args.rank = i;
+	    printf("Creating thread\n");
 	    pthread_create(&id[i], NULL, &convolute, (void*)&args);
-	    printf("Created Thread %i\n", i);
-    }
-
-    for (int i = 0; i < threadCount; i++) {
 	    pthread_join(id[i], NULL);
     }
 
