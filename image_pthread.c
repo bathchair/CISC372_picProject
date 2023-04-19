@@ -140,6 +140,10 @@ int main(int argc,char** argv){
 	    printf("Created Thread %i\n", i);
     }
 
+    for (int i = 0; i < threadCount; i++) {
+	    pthread_join(id[i], NULL);
+    }
+
     stbi_write_png("output.png",destImage.width,destImage.height,destImage.bpp,destImage.data,destImage.bpp*destImage.width);
     stbi_image_free(srcImage.data);
     
