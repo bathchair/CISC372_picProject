@@ -1,6 +1,6 @@
 
 image_pthread: image_pthread.c image_pthread.h
-	gcc -g image_pthread.c -o image_pthread -lpthread -lm
+	gcc -g image_pthread.c -o image_pthread -lpthread -lm -std=c99
 
 image_mp: image_mp.c image.h
 	gcc -g -fopenmp image_mp.c -o image_mp -lm

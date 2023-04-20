@@ -1,0 +1,51 @@
+Script started on Wed Apr 19 20:39:48 2023
+]0;dea@r1n00.darwin:~/CISC372_picProject[?1034h[dea@r1n00 CISC372_picProject]$ srun image_mp e pic1.jpg edge
+Beginning Thread 0
+Beginning Thread 3
+Beginning Thread 8
+Beginning Thread 6
+Beginning Thread 5
+Beginning Thread 2
+Beginning Thread 1
+Beginning Thread 4
+Beginning Thread 7
+Beginning Thread 9
+Thread 4 Complete
+Thread 6 Complete
+Thread 5 Complete
+Thread 9 Complete
+Thread 2 Complete
+Thread 1 Complete
+Thread 8 Complete
+Thread 7 Complete
+Thread 0 Complete
+Thread 3 Complete
+Took 12 seconds
+]0;dea@r1n00.darwin:~/CISC372_picProject[dea@r1n00 CISC372_picProject]$ cp output.png image_mp_darwin.png[1P[1P[1@m[1@v output.png image_mp_darwin.png
+]0;dea@r1n00.darwin:~/CISC372_picProject[dea@r1n00 CISC372_picProject]$ srun image_pthread pic1.jpg edge
+Creating thread
+Finished line - 0
+Creating thread
+Finished line - 1
+Creating thread
+Finished line - 2
+Creating thread
+Finished line - 3
+Creating thread
+Finished line - 4
+Creating thread
+Finished line - 5
+Creating thread
+Finished line - 6
+Creating thread
+Finished line - 7
+Creating thread
+Finished line - 8
+Creating thread
+Finished line - 9
+Took 7 seconds
+]0;dea@r1n00.darwin:~/CISC372_picProject[dea@r1n00 CISC372_picProject]$ mv output.png image_pthread.d  _dr arwin.png
+]0;dea@r1n00.darwin:~/CISC372_picProject[dea@r1n00 CISC372_picProject]$ exit
+exit
+
+Script done on Wed Apr 19 20:40:59 2023
