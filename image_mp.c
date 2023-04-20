@@ -79,7 +79,7 @@ void convolute(Image* srcImage,Image* destImage,Matrix algorithm){
         }
     }
 
-    printf("Thread %i\n Complete", my_rank);
+    printf("Thread %i Complete\n", my_rank);
 }
 
 //Usage: Prints usage information for the program
